@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="#" onclick="javascript:pageMove(event, 'a');">페이지(A)로 이동</a>
+    <a href="#" onclick="javascript:pageMove(event, 'b');">페이지(B)로 이동</a>
+    <a href="#" onclick="javascript:pageMove(event, 'c');">페이지(C)로 이동</a>
+    <div></div>
+    <div></div>
+</body>
+<script>
+    function pageMove(e, sufix){
+        e.preventDefault();
+        
+        if(sufix!=='c'){
+            history.pushState({data: 'pushState'+sufix}, 'pushState', '#/page'+sufix.toUpperCase());
+        }else{
+            history.replaceState({data: 'replaceState'}, 'replaceState', '#/page'+sufix.toUpperCase());
+        }
+        document.querySelectorAll("div")[1].innerHTML = history.length;
+    }
+
+    window.addEventListener('popstate', ()=>{
+        if(history.state){
+            document.querySelectorAll("div")[0].innerHTML = history.state.data;
+        }else{
+            document.querySelectorAll("div")[0].innerHTML = '';
+        }
+    })
+</script>
+</html>
